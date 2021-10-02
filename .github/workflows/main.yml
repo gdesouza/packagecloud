@@ -34,5 +34,6 @@ jobs:
           
       - name: Run unit tests
         run: |
-          echo "Running with secret: ${{ secrets.PACKAGECLOUD_API_KEY }}" 
           python -m coverage run -m unittest discover -s tests
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r .coverage
+
