@@ -28,6 +28,7 @@ class TestToken(unittest.TestCase):
         """Read token but environment variable is not set"""
 
         old_value = os.environ.get('PACKAGECLOUD_API_KEY', '')
+        os.environ.pop('PACKAGECLOUD_API_KEY', None)
 
         result_token = read_token_from_env()
         self.assertEqual(result_token, '')
