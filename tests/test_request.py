@@ -1,3 +1,10 @@
+"""
+test_request.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 # Standard library
 import unittest
 from unittest.mock import patch
@@ -20,6 +27,8 @@ class TestRequest(unittest.TestCase):
         cls.mock_get_patcher.stop()
 
     def test_init(self):
+        """Test class initialization"""
+
         self.mock_get.return_value.ok = True
 
         url = "http"

@@ -1,13 +1,22 @@
+"""
+repository.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 import logging
-from packagecloud import BasePackageCloudClient
+from baseclient import BasePackageCloudClient
 from request import Request
 
 
 class RepositoryClient(BasePackageCloudClient):
+
     """Repository settings class"""
 
     def __init__(self, user, repo, distro, api_token):
         """
+
         Parameters
         ----------
         user : str
@@ -22,10 +31,14 @@ class RepositoryClient(BasePackageCloudClient):
 
     @property
     def packages_path(self):
+        """URL resource path for packages"""
+
         return f'{self.repo_path}/packages.json'
 
     @property
     def repo_path(self):
+        """URL resource path for repository"""
+
         return f'repos/{self.user}/{self.repo}'
 
     def get_packages(self):
@@ -35,11 +48,11 @@ class RepositoryClient(BasePackageCloudClient):
 
     def get_number_of_packages(self):
         """Get number of packages in the repo"""
-        
+
         info = Request(self.url_base).get(self.packages_path)[0]
         logging.debug(f"Info request returned: {info}")
         return int(info.get('package_count_human', 0))
-        
+
     # def get(self, path, parms, page=1):
     #     """Make GET request to packagecloud API
     #     """
@@ -55,11 +68,11 @@ class RepositoryClient(BasePackageCloudClient):
 
     # def delete_request(self, path):
     #     """Make DELETE request to packagecloud API"""
-        
+
     #     return requests.delete(f'{self.url_base}/{path}', timeout=120)
 
 
-    
+
     # def search_packages(self, repo, filter):
     #     """Search for packages that match a filter"""
 
@@ -74,16 +87,16 @@ class RepositoryClient(BasePackageCloudClient):
 
     # def search_packages_regex(self, repo, regex):
     #     """Search for packages that match a regular expression
-        
-    #     Packagecloud doesn't provide a way to filter using regular 
+
+    #     Packagecloud doesn't provide a way to filter using regular
     #     expressions. This method gets all the packages and filters
     #     the results based on the given regular expression.
 
     #     Args:
-    #         repo: The repository 
+    #         repo: The repository
     #         regex: The regular expression
     #     """
-        
+
     #     all_packages = self.get_all_packages(repo)
     #     matched_packages = []
 
@@ -103,7 +116,8 @@ class RepositoryClient(BasePackageCloudClient):
     # def get_versions(self, repo, package_name):
     #     """Get versions of a given package on a specific repo"""
 
-    #     cmd = f'/api/v1/repos/avidbots/{repo}/package/deb/ubuntu/xenial/{package_name}/amd64/versions.json'
+    #     cmd = f'/api/v1/repos/avidbots/{repo}/package/deb/ubuntu/
+    #     xenial/{package_name}/amd64/versions.json'
     #     return self.get_objects(cmd)
 
 
@@ -122,7 +136,7 @@ class RepositoryClient(BasePackageCloudClient):
 
     # def delete_packages(self, packages):
     #     """Delete packages from packagecloud
-        
+
     #     Args:
     #         packages: list of packages. Each item is a JSON object containing
     #                   the following elements:
@@ -130,7 +144,7 @@ class RepositoryClient(BasePackageCloudClient):
     #             "filename": "jakedotrb-0.0.1.gem",
     #             "destroy_url": "/api/v1/repos/test_user/test_repo/gems/jakedotrb-0.0.1.gem"
     #         }
-                        
+
     #     """
 
     #     for package in packages:
@@ -147,7 +161,7 @@ class RepositoryClient(BasePackageCloudClient):
 
     # def print_packages(self, packages):
     #     for package in packages:
-    #         name = package['name'] 
+    #         name = package['name']
     #         version = package['version']
     #         release = package['release']
     #         print(f'{name}_{version}-{release}')
@@ -167,9 +181,9 @@ class RepositoryClient(BasePackageCloudClient):
 
     #     cmd = f'/api/v1/repos/avidbots/{repo}/packages.json'
     #     url = f'{self.url}/{cmd}?per_page=0'
-        
+
     #     response = requests.get(url, timeout=120)
-        
+
     #     if response.ok:
     #         return int(response.headers['Total'])
     #     else:

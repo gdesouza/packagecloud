@@ -1,13 +1,22 @@
+"""
+test_packagecloud.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 import unittest
 import logging
 
-from packagecloud import BasePackageCloudClient
+from baseclient import BasePackageCloudClient
 
 
 class TestMethods(unittest.TestCase):
     """Unit tests for Packagecloud class"""
 
     def test_init(self):
+        """Test class initialization"""
+
         api_token = 'SOMETOKEN'
         http_scheme = 'https'
         api_domain = 'packagecloud.io'

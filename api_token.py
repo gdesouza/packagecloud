@@ -1,3 +1,10 @@
+"""
+api_token.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 import os
 import json
 import logging
@@ -27,10 +34,10 @@ def read_token_from_file(config_file):
 
     if not os.path.isfile(config_file):
         return ''
-    
+
     with open(config_file, "r") as file:
         contents = file.read()
-    
+
     try:
         return json.loads(contents).get('token', '')
     except json.decoder.JSONDecodeError:

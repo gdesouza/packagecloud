@@ -1,3 +1,10 @@
+"""
+test_token.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 import unittest
 import os
 import random
@@ -7,6 +14,7 @@ from api_token import read_token_from_env, read_token_from_file
 
 
 class TestToken(unittest.TestCase):
+    """Unit tests for api_token class"""
 
     def setUp(self):
         self.temp_files = []
@@ -30,45 +38,45 @@ class TestToken(unittest.TestCase):
         old_value = os.environ.get('PACKAGECLOUD_API_KEY', '')
         os.environ.pop('PACKAGECLOUD_API_KEY', None)
 
-        result_token = read_token_from_env()
-        self.assertEqual(result_token, '')
+        result = read_token_from_env()
+        self.assertEqual(result, '')
 
         os.environ['PACKAGECLOUD_API_KEY'] = old_value
 
-    def test_read_token_from_env_success(self):
+    def test_read_token_from_env(self):
         """Read token from existing environment variable"""
 
         old_value = os.environ.get('PACKAGECLOUD_API_KEY', '')
-        expected_token = 'abcdefgh'
-        os.environ['PACKAGECLOUD_API_KEY'] = expected_token
+        expected = 'abcdefgh'
+        os.environ['PACKAGECLOUD_API_KEY'] = expected
 
-        result_token = read_token_from_env()
-        self.assertEqual(result_token, expected_token)
+        result = read_token_from_env()
+        self.assertEqual(result, expected)
         os.environ['PACKAGECLOUD_API_KEY'] = old_value
 
     def test_read_token_from_file_fail(self):
         """Read token from non existing file"""
 
-        result_token = read_token_from_file('/some/non/existent/file')
-        self.assertEqual(result_token, '')
+        result = read_token_from_file('/some/non/existent/file')
+        self.assertEqual(result, '')
 
-    def test_read_token_from_file_parse_error(self):
+    def test_parse_error_read_token(self):
         """Read token from file fails parsing"""
 
         temp_file = self.temp_file()
 
-        result_token = read_token_from_file(temp_file)
-        self.assertEqual(result_token, '')
+        result = read_token_from_file(temp_file)
+        self.assertEqual(result, '')
 
-    def test_read_token_from_file_parse_success(self):
+    def test_read_token_file(self):
         """Read token from file succeeds"""
 
         temp_file = self.temp_file()
         with open(temp_file, "a") as file:
             file.write("token: 'abcdefgh'")
 
-        result_token = read_token_from_file(temp_file)
-        self.assertEqual(result_token, '')
+        result = read_token_from_file(temp_file)
+        self.assertEqual(result, '')
 
 
 if __name__ == '__main__':

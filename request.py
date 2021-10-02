@@ -1,3 +1,10 @@
+"""
+request.py
+MIT License
+Copyright (c) 2020 Gustavo de Souza
+Author: Gus de Souza
+"""
+
 import logging
 import requests
 
@@ -6,7 +13,7 @@ class Request:
     """
     A class used to send API requests.
     """
-    
+
     def __init__(self, url, timeout=120):
         """
         Parameters
@@ -18,7 +25,7 @@ class Request:
         self.url = url
         self.timeout = timeout
         self._params = None
-    
+
     @property
     def params(self):
         """
@@ -60,12 +67,12 @@ class Request:
 
         logging.debug(f'Request: {url}')
         return requests.get(url, timeout=self.timeout)
-        
+
     def get(self, path, params=None):
         """ Make GET request to API
 
         Parameters
-        ========== 
+        ==========
         path: str
             API resource path
         params: dict,optional
@@ -85,7 +92,7 @@ class Request:
             logging.error(f'ERROR: HTTP return code: {response.status_code} ({path})')
             return objects
 
-        # always use the total number of packages returned by first 
+        # always use the total number of packages returned by first
         # request as the reference
         objects.append(response.json())
 
@@ -110,9 +117,11 @@ class Request:
 
         # sanity check, since multiple requests are made. We might have race
         # conditions. Inform user if there are anything strange going on
-        if len(objects) != total:
-            logging.warning('Number of retrieved objects does not match ' +
-                   f'({len(objects)} retrieved, should be {total})' )
+        len_objects = len(objects)
+        if len_objects != total:
+            message = f'Number of retrieved objects does not match ({len_objects} ' + \
+                      f'retrieved, should be {total})'
+            logging.warning(message)
 
         return objects
 
