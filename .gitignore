@@ -203,3 +203,9 @@ CATKIN_IGNORE
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/ros,vscode,python
+
+.idea/
+.vscode/
+log/
+
+

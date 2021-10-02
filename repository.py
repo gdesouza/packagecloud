@@ -1,5 +1,6 @@
 """
 repository.py
+
 MIT License
 Copyright (c) 2020 Gustavo de Souza
 Author: Gus de Souza
@@ -50,7 +51,8 @@ class RepositoryClient(BasePackageCloudClient):
         """Get number of packages in the repo"""
 
         info = Request(self.url_base).get(self.packages_path)[0]
-        logging.debug(f"Info request returned: {info}")
+        message = f"Info request returned: {info}"
+        logging.debug(message)
         return int(info.get('package_count_human', 0))
 
     # def get(self, path, parms, page=1):

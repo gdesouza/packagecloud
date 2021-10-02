@@ -1,5 +1,6 @@
 """
 request.py
+
 MIT License
 Copyright (c) 2020 Gustavo de Souza
 Author: Gus de Souza
@@ -65,7 +66,8 @@ class Request:
         if self.params:
             url += f'&{self.params}'
 
-        logging.debug(f'Request: {url}')
+        message = f'Request: {url}'
+        logging.debug(message)
         return requests.get(url, timeout=self.timeout)
 
     def get(self, path, params=None):
@@ -85,11 +87,13 @@ class Request:
         self.params = params
 
         response = self._get_request(path)
-        logging.debug(response.text)
+        message = f'{response.text}'
+        logging.debug(message)
 
         # if not 200 OK
         if not response.ok:
-            logging.error(f'ERROR: HTTP return code: {response.status_code} ({path})')
+            message = f'ERROR: HTTP return code: {response.status_code} ({path})'
+            logging.error(message)
             return objects
 
         # always use the total number of packages returned by first
@@ -99,7 +103,8 @@ class Request:
         total = int(response.headers.get("Total", 0))
         read = len(objects)
 
-        logging.debug(f'Reading {read} of {total}')
+        message = f'Reading {read} of {total}'
+        logging.debug(message)
 
         while read < total:
             page += 1
@@ -107,13 +112,15 @@ class Request:
 
             # if not 200 OK
             if not response.ok:
-                logging.error(f"Download interrupted due to request error: {response.status_code}")
+                message = f"Download interrupted due to request error: {response.status_code}"
+                logging.error(message)
                 break
 
             objects += response.json()
             read = len(objects)
 
-            logging.debug(f'Reading {read} of {total}')
+            message = f'Reading {read} of {total}'
+            logging.debug(message)
 
         # sanity check, since multiple requests are made. We might have race
         # conditions. Inform user if there are anything strange going on

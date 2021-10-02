@@ -1,5 +1,6 @@
 """
 api_token.py
+
 MIT License
 Copyright (c) 2020 Gustavo de Souza
 Author: Gus de Souza
@@ -41,7 +42,8 @@ def read_token_from_file(config_file):
     try:
         return json.loads(contents).get('token', '')
     except json.decoder.JSONDecodeError:
-        logging.warning(f"Could not decode JSON in {config_file}")
+        message = f"Could not decode JSON in {config_file}"
+        logging.warning(message)
         return ''
 
 
