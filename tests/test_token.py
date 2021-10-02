@@ -27,17 +27,23 @@ class TestToken(unittest.TestCase):
     def test_read_token_from_env_fail(self):
         """Read token but environment variable is not set"""
 
+        old_value = os.environ.get('PACKAGECLOUD_API_KEY', '')
+
         result_token = read_token_from_env()
         self.assertEqual(result_token, '')
+
+        os.environ['PACKAGECLOUD_API_KEY'] = old_value
 
     def test_read_token_from_env_success(self):
         """Read token from existing environment variable"""
 
+        old_value = os.environ.get('PACKAGECLOUD_API_KEY', '')
         expected_token = 'abcdefgh'
         os.environ['PACKAGECLOUD_API_KEY'] = expected_token
 
         result_token = read_token_from_env()
         self.assertEqual(result_token, expected_token)
+        os.environ['PACKAGECLOUD_API_KEY'] = old_value
 
     def test_read_token_from_file_fail(self):
         """Read token from non existing file"""
