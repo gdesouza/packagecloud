@@ -5,7 +5,6 @@ import logging
 
 def read_token_from_env():
     """Reads the token from environment variable PACKAGECLOUD_API_KEY
-       
     Returns
     -------
     The API token string or a blank string if the variable does not exist
@@ -16,7 +15,6 @@ def read_token_from_env():
 
 def read_token_from_file(config_file):
     """Reads the token from a config file
-       
     Parameters
     ----------
     config_file: string
@@ -34,20 +32,17 @@ def read_token_from_file(config_file):
         contents = file.read()
     
     try:
-        api_token = json.loads(contents).get('token', '')
+        return json.loads(contents).get('token', '')
     except json.decoder.JSONDecodeError:
         logging.warning(f"Could not decode JSON in {config_file}")
-        api_token = ''
-    finally:
-        return api_token
+        return ''
 
 
 def load_token():
-    """Load packagecloud token
-    
+    """
+    Load packagecloud token
     Try to use env var PACKAGECLOUD_API_KEY first (for jenkins jobs)
-    If it is not set then try to read it from ~/.packagecloud 
-    
+    If it is not set then try to read it from ~/.packagecloud
     Returns
     -------
     string
