@@ -33,9 +33,13 @@ jobs:
           pip install coverage
           
       - name: Run unit tests
+        env: # Or as an environment variable
+          PACKAGECLOUD_API_KEY: ${{ secrets.PACKAGECLOUD_API_KEY }}
         run: |
           python -m coverage run -m unittest discover -s tests
           
       - name: Upload coverage file
+        env: # Or as an environment variable
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r .coverage
 
