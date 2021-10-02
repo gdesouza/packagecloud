@@ -8,15 +8,14 @@ def read_token_from_env():
        
     Returns
     -------
-    string
-        The API token string or a blank string if the variable does not exist
+    The API token string or a blank string if the variable does not exist
     """
 
     return os.environ.get('PACKAGECLOUD_API_KEY', '')
 
 
 def read_token_from_file(config_file):
-    """Reads the token from the file ~/.packagecloud
+    """Reads the token from a config file
        
     Parameters
     ----------
@@ -25,8 +24,7 @@ def read_token_from_file(config_file):
 
     Returns
     -------
-    string
-        The API token string or a blank string if the variable does not exist
+    The API token string or a blank string if the variable does not exist
     """
 
     if not os.path.isfile(config_file):
@@ -59,7 +57,3 @@ def load_token():
     cfg_file = os.path.join(home_dir, ".packagecloud")
 
     return read_token_from_env() or read_token_from_file(cfg_file)
-
-
-
-
